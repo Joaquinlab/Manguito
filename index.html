@@ -1230,6 +1230,116 @@ html.paused *,html.paused *::before,html.paused *::after{animation-play-state:pa
   .bg i,.bg i.g{animation:none!important}
   *,*::before,*::after{transition-duration:.01ms!important}
 }
+
+/* calendario: ciclos en azul, vencimiento (6 de 6) en rojo, cuota visible en la celda */
+.day.cyc{background:linear-gradient(150deg,rgba(70,160,255,.26),rgba(70,160,255,.08));border-color:rgba(90,170,255,.65)}
+.day.exp{background:linear-gradient(150deg,rgba(242,64,44,.42),rgba(242,64,44,.14));border-color:rgba(255,80,60,.95);box-shadow:0 0 0 1px rgba(255,80,60,.5)}
+.day.exp .dn{color:#fff;font-weight:800}
+.day .cq{font-family:var(--f-mono);font-size:.58rem;line-height:1;color:var(--muted);margin-top:.1rem}
+.day.exp .cq{color:#FFD2CB;font-weight:700}
+.pill.cyc{background:rgba(90,170,255,.2);color:#8CC8FF}
+@media(max-width:600px){.day .cq{display:none}}
+
+/* ===== v7: perfil, calendario con cuotas al centro, vista previa de listas y responsive ===== */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{overflow-x:clip}
+.glass,.pcard,.pmain,.calside,.field,.af{min-width:0}
+input[type=date]{width:100%;font:inherit;color:var(--fg);color-scheme:dark;padding:.8rem 1rem;border-radius:.9rem;border:1px solid var(--glass-line);background:rgba(255,255,255,.06);box-shadow:var(--hi);min-height:2.9rem}
+@media(max-width:760px){input,select,textarea{font-size:16px}}
+/* perfil */
+.prof{align-items:flex-start}
+.prof .pinfo{flex:1;min-width:0}
+.pdl{margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(12rem,1fr));gap:.7rem 1.4rem}
+.pdl>div{min-width:0}
+.pdl dt{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.15rem}
+.pdl dd{margin:0;font-weight:700;font-size:1rem;overflow-wrap:anywhere}
+.prof>.btn{flex:none;align-self:center}
+@media(max-width:560px){
+  .prof{align-items:stretch;text-align:left}
+  .prof .pav{align-self:center}
+  .pdl{grid-template-columns:1fr;gap:0}
+  .pdl>div{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:.7rem 0;border-top:1px solid var(--line)}
+  .pdl dt{margin:0;flex:none}
+  .pdl dd{text-align:right;font-size:.95rem}
+  .prof>.btn{align-self:stretch}
+}
+/* calendario: cuota (2/8, 5/6...) en el medio de cada día */
+.day.hq{place-items:center}
+.day.hq .dn{position:absolute;top:.28rem;left:.4rem;transform:none;font-size:.62rem;line-height:1;opacity:.85}
+.day.hq.today .dn{width:1.5em;height:1.5em;top:.18rem;left:.22rem;font-size:.6rem;opacity:1}
+.day.hq .cq{display:block;margin:0;padding-top:.55rem;font-family:var(--f-display);font-size:clamp(.78rem,2.4vw,1.12rem);font-weight:800;letter-spacing:-.02em;color:#fff;line-height:1;white-space:nowrap}
+.day.hq .cq sup{font-size:.5em;margin-left:.08em;color:var(--yellow);vertical-align:top;position:relative;top:-.15em}
+.day.hq.exp .cq{color:#FFD2CB}
+.day.hq:not(.exp):not(.cyc) .cq{color:var(--yellow)}
+.day.hq .dots{display:none}
+.dt.q{background:transparent;border:1px solid var(--yellow);width:.7rem;height:.7rem;position:relative}
+.day{min-width:0}
+@media(max-width:600px){.day.hq .cq{display:block}}
+@media(max-width:420px){.day.hq .dn{top:.2rem;left:.28rem;font-size:.56rem}.day.hq .cq{padding-top:.5rem;font-size:.74rem}}
+/* vista previa (3) + ver todo */
+.calmore{width:100%;justify-content:center;margin-top:.1rem}
+.calmore svg{width:16px;height:16px}
+#m-cal .mbox{max-width:34rem}
+.mcl{display:grid;gap:.45rem;max-height:62vh;overflow:auto;overscroll-behavior:contain;padding-right:.15rem}
+.mgrp{margin:.7rem 0 .1rem;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--yellow);text-transform:uppercase}
+.mgrp:first-child{margin-top:0}
+.mcl .st{padding:.75rem .95rem}
+.st>div{min-width:0}
+.st b{overflow-wrap:anywhere}
+.st .pill{flex:none}
+@media(max-width:560px){#m-cal{padding:0;place-items:end stretch}#m-cal .mbox{max-width:none;border-radius:1.4rem 1.4rem 0 0;max-height:88vh}.mcl{max-height:68vh}}
+/* comparador: botón de compañía sin cortes ni desborde */
+.cmp-filters>.field{min-width:0}
+.cmp-filters .csel,.cmp-filters .cbtn{min-width:0;max-width:100%}
+.cmp-filters .cbtn{min-height:2.9rem;gap:.5rem}
+.cmp-filters .cbtn .cur{flex:1 1 auto;min-width:0;overflow:hidden;white-space:nowrap}
+.cmp-filters .cbtn .cur>span:last-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cmp-filters .cbtn>svg{flex:none}
+.cmp-filters .cmenu{min-width:100%;width:max-content;max-width:calc(100vw - 2rem)}
+.cmp-filters .copt span{white-space:normal;overflow-wrap:anywhere}
+@media(max-width:900px) and (min-width:561px){.cmp-filters .cbtn{font-size:.92rem;padding-inline:.85rem}}
+@media(max-width:560px){.cmp-filters .cmenu{left:0;right:0;width:auto;max-width:none;max-height:min(18rem,50vh)}.cmp-filters .copt{padding:.85rem .9rem;min-height:44px}}
+.lgo .allc{flex:none;overflow:hidden}
+.lgo .allc svg{width:1.6rem;height:1.6rem}
+.logos{gap:.4rem}
+@media(max-width:560px){.logos{display:grid;grid-template-columns:repeat(auto-fill,minmax(4.6rem,1fr));gap:.3rem}.lgo{width:auto;min-width:0}.lgo img,.lgo .allc{width:3.2rem;height:3.2rem}}
+/* portal: tablet y celu */
+@media(min-width:861px) and (max-width:1100px){.portal{grid-template-columns:11.5rem minmax(0,1fr);gap:.8rem}.cgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:860px){.side button{min-height:48px}.tw{-webkit-overflow-scrolling:touch}}
+@media(max-width:560px){.phead h2{font-size:1.35rem}.pcard{padding:1rem}.gest-h{flex-wrap:wrap}.kpis{gap:.6rem}}
+.wrap{min-width:0}
+
+/* comparador: el selector abierto siempre queda por encima del siguiente */
+.csel.on{z-index:90!important}
+.cmp-filters .field:has(.csel.on){position:relative;z-index:90}
+.cmp-filters .cmenu,.cmenu{background:#1a0f07!important;-webkit-backdrop-filter:none;backdrop-filter:none}
+@media(max-width:560px){#m-cal .mbox{padding-bottom:calc(1.4rem + env(safe-area-inset-bottom,0px))}}
+/* perfil v8: tablet = avatar + botones arriba, datos en 2 columnas; laptop/pc = una sola fila */
+@media(min-width:561px){
+  .prof{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-areas:"av btns" "info info";align-items:center;gap:1rem 1.2rem}
+  .prof .pav{grid-area:av}
+  .prof .pinfo{grid-area:info;flex:none}
+  .prof .pbtns{grid-area:btns;flex-direction:row;justify-content:flex-end;flex-wrap:wrap;align-self:center}
+  .pdl{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(min-width:1100px){
+  .prof{grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"av info btns"}
+  .pbtns{flex-direction:column!important}
+}
+/* perfil: tarjeta de datos */
+.pdl dd.empty{color:var(--faint);font-weight:500;font-style:italic}
+.pdl>div{padding:.7rem .9rem;border-radius:.9rem;background:var(--glass-solid);border:1px solid var(--glass-line)}
+.pbtns{display:flex;flex-direction:column;gap:.5rem;flex:none;align-self:center}
+.pbtns .btn{white-space:nowrap}
+#m-prof .mbox{max-width:36rem}
+.pform label{display:grid;gap:.3rem;font-size:.8rem;font-weight:600;color:var(--muted)}
+.pform input,.pform select{display:block;width:100%;margin:0;min-height:2.9rem;font:inherit;font-weight:600;color:var(--fg);color-scheme:dark;padding:.7rem 1rem;border-radius:.9rem;border:1px solid var(--glass-line);background:rgba(255,255,255,.06)}
+.pform .two{gap:.7rem}
+@media(max-width:560px){
+  .pdl>div{padding:.7rem .2rem;border:0;border-top:1px solid var(--line);border-radius:0;background:none}
+  .pbtns{align-self:stretch;flex-direction:column}
+  .pbtns .btn{width:100%}
+}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -1581,6 +1691,7 @@ html.paused *,html.paused *::before,html.paused *::after{animation-play-state:pa
           <input type="text" id="r-doc" inputmode="numeric" placeholder="Número de DNI, sin puntos" maxlength="8" autocomplete="off" aria-label="Número de documento">
         </div>
         <p class="hint" id="doc-hint">Elegí DNI, o CUIT/CUIL si el servicio está a nombre de una empresa.</p></div>
+      <div class="af"><label for="r-birth">Fecha de nacimiento <em>*</em></label><input type="date" id="r-birth" autocomplete="bday" min="1900-01-01"></div>
       <div class="af"><label for="r-wsp">Teléfono <em>*</em></label><input type="tel" id="r-wsp" placeholder="Con código de área, ej.: 11 2345 6789" autocomplete="tel"></div>
       <div class="af"><label for="r-mail">Email <em>*</em></label><input type="email" id="r-mail" placeholder="tu@email.com" autocomplete="email"></div>
       <div class="af"><label for="r-pass">Creá tu contraseña <em>*</em></label>
@@ -1651,8 +1762,8 @@ html.paused *,html.paused *::before,html.paused *::after{animation-play-state:pa
       <div class="phead"><div><h2>Calendario</h2><p>Ciclo de facturación, vencimientos de promos y fechas clave de tus servicios.</p></div></div>
       <div class="calw">
         <div class="glass pcard"><div class="calh"><button class="sb" type="button" id="c-prev" aria-label="Mes anterior">‹</button><b id="mname"></b><button class="sb" type="button" id="c-next" aria-label="Mes siguiente">›</button></div><div class="cal" id="cal"></div>
-          <div class="leyc" aria-label="Referencias del calendario"><span><i class="dt cyc"></i>Ciclo de facturación</span><span><i class="dt exp"></i>Vence promo</span><span><i class="dt oth"></i>Otro aviso</span><span><i class="dt hoy"></i>Hoy</span></div></div>
-        <div class="calside"><div class="glass pcard"><h3>Ciclo de facturación</h3><p class="mut" style="font-size:.84rem">El día del mes en que cada compañía emite tu factura.</p><div class="list" id="cycl"></div></div>
+          <div class="leyc" aria-label="Referencias del calendario"><span><i class="dt cyc"></i>Ciclo de facturación</span><span><i class="dt exp"></i>Vence promo (última cuota)</span><span><i class="dt q"></i>Cuota actual (ej. 2/8)</span><span><i class="dt oth"></i>Otro aviso</span><span><i class="dt hoy"></i>Hoy</span></div></div>
+        <div class="calside"><div class="glass pcard"><h3>Ciclo de facturación</h3><p class="mut" style="font-size:.84rem">Hay 4 ciclos por mes: los días 7, 14, 21 y 28. Cada servicio factura en uno de ellos.</p><div class="list" id="cycl"></div></div>
         <div class="glass pcard"><h3>Próximos eventos</h3><div class="list" id="evs"></div><p class="fine" id="evempty" hidden>No hay eventos próximos en este período.</p></div></div>
       </div>
     </div>
@@ -1667,7 +1778,7 @@ html.paused *,html.paused *::before,html.paused *::after{animation-play-state:pa
     </div>
     <div data-panel="mas" class="pmain" hidden>
       <div class="phead"><div><h2>Más</h2><p>Tu perfil, tu plan, ayuda y seguridad.</p></div></div>
-      <div class="glass pcard prof"><div class="pav" id="pav">M</div><div class="pinfo"><b id="pf-name">Tu cuenta</b></div><button class="btn btn-ghost sm" type="button" data-act="photo"><span data-i="upload"></span>Subir foto</button></div>
+      <div class="glass pcard prof"><div class="pav" id="pav">M</div><div class="pinfo"><dl class="pdl" id="pf-data"><div><dt>Nombre y apellidos</dt><dd id="pf-name">Tu cuenta</dd></div><div><dt id="pf-doc-l">DNI / CUIL / CUIT</dt><dd id="pf-doc">—</dd></div><div><dt>Fecha de nacimiento</dt><dd id="pf-birth">—</dd></div><div><dt>Número de teléfono</dt><dd id="pf-phone">—</dd></div></dl></div><div class="pbtns"><button class="btn btn-primary sm" type="button" data-act="editprof"><span data-i="user"></span>Completar / editar datos</button><button class="btn btn-ghost sm" type="button" data-act="photo"><span data-i="upload"></span>Subir foto</button></div></div>
       <div class="glass pcard plancard"><div class="gest-h"><div class="plw"><span class="crown" aria-hidden="true">👑</span><div><small class="eb">Mi plan</small><h3 id="plan-n">Plan Gratis</h3></div></div><span class="pill go" id="plan-p">Gratis</span></div><button class="btn btn-primary" type="button" data-act="plan">Gestionar plan</button></div>
       <div class="two">
         <button class="glass rowc" type="button" data-act="tickets"><span class="ico" data-i="ticket" data-s="20"></span><div><b>Mis tickets</b><small>Tus últimas gestiones</small></div><span data-i="right"></span></button>
@@ -1684,6 +1795,16 @@ html.paused *,html.paused *::before,html.paused *::after{animation-play-state:pa
   </div>
 </div></div></div>
 <div class="modal" id="m-ticket"><div class="mbox"><div class="mhead"><h3 id="mt-title">Detalle de la gestión</h3><button class="x" type="button" data-act="close" data-m="m-ticket" aria-label="Cerrar"><span data-i="close"></span></button></div><div id="mt-body" class="pmain"></div></div></div>
+<div class="modal" id="m-prof"><div class="mbox" role="dialog" aria-modal="true" aria-labelledby="mp-h">
+  <div class="mhead"><h3 id="mp-h">Mis datos</h3><button class="x" type="button" data-act="close" data-m="m-prof" aria-label="Cerrar"><span data-i="close"></span></button></div>
+  <div class="pmain pform">
+    <div class="two"><label>Nombre<input type="text" id="pe-name" autocomplete="given-name"></label><label>Apellido<input type="text" id="pe-last" autocomplete="family-name"></label></div>
+    <div class="two"><label>Tipo de documento<select id="pe-dt"><option>DNI</option><option>CUIL</option><option>CUIT</option></select></label><label>Número<input type="text" id="pe-doc" inputmode="numeric" autocomplete="off" placeholder="Sin puntos ni guiones"></label></div>
+    <div class="two"><label>Fecha de nacimiento<input type="date" id="pe-birth" autocomplete="bday" min="1900-01-01"></label><label>Número de teléfono<input type="tel" id="pe-phone" autocomplete="tel" placeholder="11 2345 6789"></label></div>
+    <p class="err" id="pe-err" role="alert"></p>
+    <button class="btn btn-primary" type="button" data-act="saveprof">Guardar datos</button>
+  </div></div></div>
+<div class="modal" id="m-cal"><div class="mbox"><div class="mhead"><h3 id="mc-title">Todo</h3><button class="x" type="button" data-act="close" data-m="m-cal" aria-label="Cerrar"><span data-i="close"></span></button></div><div id="mc-body" class="mcl"></div></div></div>
 <div class="modal" id="m-bonif"><div class="mbox ptb" role="dialog" aria-modal="true" aria-labelledby="pt-h">
   <button class="x ptx" type="button" data-act="close" data-m="m-bonif" aria-label="Cerrar"><span data-i="close"></span></button>
   <div class="ptk">
@@ -3244,9 +3365,15 @@ return{svg:function(text){var q=new Q(-1,L.M);q.addData(text);q.make();var n=q.g
     if(last.length<2){er.textContent='Escribí tu apellido.';$('r-last').focus();return}
     if(doc.length<d.min){er.textContent='El '+docType+' es obligatorio ('+(docType==='DNI'?'7 u 8':'11')+' números).';$('r-doc').focus();return}
     if($('r-wsp').value.replace(/\D/g,'').length<8){er.textContent='Escribí un teléfono con código de área.';$('r-wsp').focus();return}
+    var bv=$('r-birth').value,bd=bv?new Date(bv+'T00:00:00'):null,now0=new Date();
+    if(!bd||isNaN(bd)||bd>now0||bd.getFullYear()<1900){er.textContent='Elegí tu fecha de nacimiento.';$('r-birth').focus();return}
+    var age=now0.getFullYear()-bd.getFullYear()-((now0.getMonth()<bd.getMonth()||(now0.getMonth()===bd.getMonth()&&now0.getDate()<bd.getDate()))?1:0);
+    if(age<18){er.textContent='Tenés que ser mayor de 18 años para crear la cuenta.';$('r-birth').focus();return}
     if(!okMail($('r-mail').value.trim())){er.textContent='Escribí un email válido.';$('r-mail').focus();return}
     if($('r-pass').value.length<8){er.textContent='La contraseña debe tener al menos 8 caracteres.';$('r-pass').focus();return}
-    er.textContent='';userName=name+' '+last;location.hash='portal';
+    er.textContent='';userName=name+' '+last;
+    try{localStorage.setItem('mg-prof',JSON.stringify({name:userName,dtype:docType,doc:doc,birth:bv,phone:$('r-wsp').value.trim()}))}catch(x){}
+    location.hash='portal';
   });
   [].forEach.call(document.querySelectorAll('.g-btn'),function(b){b.addEventListener('click',function(){location.hash='portal'})});
   $('tab-login').addEventListener('click',function(){location.hash='login'});
@@ -3301,10 +3428,10 @@ return{svg:function(text){var q=new Q(-1,L.M);q.addData(text);q.make();var n=q.g
   var calCur=new Date();calCur=new Date(calCur.getFullYear(),calCur.getMonth(),1);
   var MES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
   var demoT=[
-    {id:'5ef88b08',provider_name:'Personal Flow',current_step:'Esperando pago',amount:65011,estimated_saving:117020,created_at:'2026-10-21T16:46:00Z'},
-    {id:'10398b12',provider_name:'Claro Internet',current_step:'Negociando',amount:32000,estimated_saving:48200,created_at:'2026-10-20T11:20:00Z'},
-    {id:'10214c77',provider_name:'Telecentro',current_step:'Activo',amount:28900,estimated_saving:35000,payment_status:'pagado',created_at:'2026-10-15T09:12:00Z'},
-    {id:'10141a90',provider_name:'Movistar',current_step:'Recibida',amount:54000,estimated_saving:26000,created_at:'2026-10-10T14:30:00Z'}];
+    {id:'5ef88b08',provider_name:'Personal Flow',current_step:'Esperando pago',promo_cuota:3,promo_total:6,amount:65011,estimated_saving:117020,created_at:'2026-10-21T16:46:00Z'},
+    {id:'10398b12',provider_name:'Claro Internet',current_step:'Negociando',promo_cuota:1,promo_total:6,amount:32000,estimated_saving:48200,created_at:'2026-10-20T11:20:00Z'},
+    {id:'10214c77',provider_name:'Telecentro',current_step:'Activo',promo_cuota:5,promo_total:6,amount:28900,estimated_saving:35000,payment_status:'pagado',created_at:'2026-10-15T09:12:00Z'},
+    {id:'10141a90',provider_name:'Movistar',current_step:'Recibida',promo_cuota:2,promo_total:8,amount:54000,estimated_saving:26000,created_at:'2026-10-10T14:30:00Z'}];
   var demoI=[
     {service_type:'Internet',provider_name:'Claro',uploaded_at:'2026-10-18T10:00:00Z',parsed_amount:46860,status:'Procesada',demo:1},
     {service_type:'Fibra',provider_name:'Movistar',uploaded_at:'2026-10-20T10:00:00Z',parsed_amount:38500,status:'En negociación',demo:1},
@@ -3429,17 +3556,53 @@ return{svg:function(text){var q=new Q(-1,L.M);q.addData(text);q.make();var n=q.g
   /* calendario */
   function kk(k){return{'b-ok':'go','b-warn':'wait','b-pri':'new','b-bad':'bad'}[k]||k||'new'}
   function iso(d,n){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(n)}
-  /* ciclo de facturación: cada servicio factura el mismo día todos los meses (día en que se cargó su factura) */
-  function cycDay(t){var d=new Date(t.created_at);return isNaN(d)?1:d.getDate()}
+  /* ciclos de facturación: hay 4 por mes (días 7, 14, 21 y 28). Cada servicio queda en el ciclo más cercano al día de su factura. */
+  var CYC=[7,14,21,28],PROMO_N=6,PROMO_MAX=36,PREV=3;
+  function cycDay(t){
+    var d=+t.billing_day||+t.cycle_day;
+    if(!d){var f=new Date(t.created_at);d=isNaN(f)?CYC[0]:f.getDate()}
+    return CYC.reduce(function(best,c){return Math.abs(c-d)<Math.abs(best-d)?c:best},CYC[0]);
+  }
+  /* vigencia de la promo: cada promo puede durar distinto (2 de 8, 5 de 6, 3 de 6...). Se lee del dato o del texto detectado en la factura. */
+  var RXQ=/(?:^|\D)(\d{1,2})\s*(?:de|\/)\s*(\d{1,2})(?!\d)/i;
+  function qTxt(t){var m=RXQ.exec([t.promo_text,t.ocr_text,t.promo_label].join(' '));return m&&+m[1]>=1&&+m[1]<=+m[2]&&+m[2]<=PROMO_MAX?m:null}
+  function promoTot(t){var n=+t.promo_total||+t.promo_cuotas||+t.promo_duration||0;if(!n){var m=qTxt(t);if(m)n=+m[2]}return n>=1&&n<=PROMO_MAX?n:PROMO_N}
+  function promoCur(t){var n=+t.promo_cuota||+t.promo_month||+t.cuota_actual;if(!n){var m=qTxt(t);if(m)n=+m[1]}return n>=1&&n<=promoTot(t)?n:0}
+  function refMonth(t){var d=new Date(t.invoice_date||t.created_at);return isNaN(d)?null:d}
+  function promoAt(t,y,m){var c=promoCur(t),r=refMonth(t);if(!c||!r)return 0;var n=c+(y-r.getFullYear())*12+(m-r.getMonth());return n>=1&&n<=promoTot(t)?n:0}
+  function promoEnd(t){var c=promoCur(t),r=refMonth(t);if(!c||!r)return null;var d=new Date(r.getFullYear(),r.getMonth()+(promoTot(t)-c),1);return{y:d.getFullYear(),m:d.getMonth()}}
+  function liveT(){return src().filter(function(t){return meta(t.current_step).i>=0})}
   function cycEv(y,m){
-    var n=new Date(y,m+1,0).getDate(),seen={};
-    return src().filter(function(t){return meta(t.current_step).i>=0}).map(function(t){
-      var k=t.provider_name+'|'+cycDay(t);if(seen[k])return null;seen[k]=1;
-      return{date:y+'-'+pad(m+1)+'-'+pad(Math.min(cycDay(t),n)),title:'Ciclo de facturación · '+(t.provider_name||'Servicio'),kind:'cyc',cyc:1}}).filter(Boolean)}
-  function baseEv(y,m){
-    var now=new Date(),ev=EV.length?EV.slice():[{date:iso(now,21),title:'Vence promo Personal Flow',kind:'bad',exp:1},{date:iso(now,28),title:'Vence Claro móvil',kind:'new'}];
-    PR.forEach(function(p){var x=p.confirmed_end_date||p.detected_end_date||(p.computed&&p.computed.estimated_end_date);if(x)ev.push({date:x.split('T')[0],title:'Vence promo '+(p.provider_name||'Servicio'),kind:'bad',exp:1,ocr:1})});
-    return ev}
+    return CYC.map(function(c){
+      var ss=liveT().filter(function(t){return cycDay(t)===c}),seen={},names=[],qs=[];
+      ss.forEach(function(t){var k=t.provider_name||'Servicio';if(seen[k])return;seen[k]=1;var q=promoAt(t,y,m),tot=promoTot(t);names.push(k+(q?' (promo '+q+' de '+tot+')':''));if(q)qs.push(q+'/'+tot)});
+      return{date:y+'-'+pad(m+1)+'-'+pad(c),title:'Ciclo de facturación · día '+c+(names.length?' · '+names.join(', '):''),kind:'cyc',cyc:1,svc:names.length,qa:qs};
+    });
+  }
+  function baseEv(){
+    var ev=EV.slice(),got={};
+    liveT().forEach(function(t){
+      var e=promoEnd(t);if(!e)return;
+      var n=new Date(e.y,e.m+1,0).getDate(),k=t.provider_name||'Servicio',tot=promoTot(t);if(got[k])return;got[k]=1;
+      ev.push({date:e.y+'-'+pad(e.m+1)+'-'+pad(Math.min(cycDay(t),n)),title:'Vence promo '+k+' · última cuota ('+tot+' de '+tot+')',kind:'bad',exp:1,ocr:1,qa:[tot+'/'+tot]});
+    });
+    PR.forEach(function(p){if(got[p.provider_name])return;var x=p.confirmed_end_date||p.detected_end_date||(p.computed&&p.computed.estimated_end_date);if(x)ev.push({date:x.split('T')[0],title:'Vence promo '+(p.provider_name||'Servicio'),kind:'bad',exp:1,ocr:1})});
+    return ev;
+  }
+  /* listas con vista previa: se muestran PREV y, si hay más, un botón abre todo en una ventana con scroll propio */
+  var CALALL={};
+  function prevList(id,items,title,groups){
+    var box=$(id);CALALL[id]={t:title,items:items,g:groups};
+    box.innerHTML=items.slice(0,PREV).map(function(x){return x.h}).join('')+(items.length>PREV?'<button type="button" class="btn btn-ghost sm calmore" data-act="calall" data-k="'+id+'">Ver todo ('+items.length+')<span data-i="right"></span></button>':'');
+    paint(box);
+  }
+  function openAll(id){
+    var c=CALALL[id];if(!c)return;
+    $('mc-title').textContent=c.t;
+    var out='',last='';
+    c.items.forEach(function(x){if(c.g&&x.g!==last){last=x.g;out+='<h4 class="mgrp">'+esc(x.g)+'</h4>'}out+=x.h});
+    $('mc-body').innerHTML=out;openM('m-cal');
+  }
   function drawC(){
     var y=calCur.getFullYear(),m=calCur.getMonth(),now=new Date(),TODAY=iso(now,now.getDate());
     $('mname').textContent=MES[m]+' '+y;
@@ -3448,16 +3611,21 @@ return{svg:function(text){var q=new Q(-1,L.M);q.addData(text);q.make();var n=q.g
     for(var i=0,f=(new Date(y,m,1).getDay()+6)%7;i<f;i++)out+='<div class="day off"></div>';
     for(var d=1,n=new Date(y,m+1,0).getDate();d<=n;d++){
       var k=iso(calCur,d),es=ev.filter(function(e){return e.date===k}),ex=es.some(function(e){return e.exp}),cy=es.some(function(e){return e.cyc}),ot=es.some(function(e){return !e.cyc&&!e.exp});
+      /* cuotas del día: primero las que vencen; sin repetir */
+      var qa=[];es.slice().sort(function(a,b){return (b.exp?1:0)-(a.exp?1:0)}).forEach(function(e){(e.qa||[]).forEach(function(q){if(qa.indexOf(q)<0)qa.push(q)})});
       var dots=(cy?'<i class="dt cyc"></i>':'')+(ex?'<i class="dt exp"></i>':'')+(ot?'<i class="dt oth"></i>':'');
       var tt=es.map(function(e){return e.title}).join(' · ');
-      out+='<div class="day'+(k===TODAY?' today':'')+(ex?' exp':'')+(cy?' cyc':'')+(es.length?' has':'')+'"'+(es.length?' title="'+esc(tt)+'" data-act="toast" data-msg="'+esc(d+' de '+MES[m]+': '+tt)+'" role="button" tabindex="0"':'')+'><span class="dn">'+d+'</span>'+(dots?'<span class="dots">'+dots+'</span>':'')+'</div>';
+      out+='<div class="day'+(k===TODAY?' today':'')+(ex?' exp':'')+(cy?' cyc':'')+(es.length?' has':'')+(qa.length?' hq':'')+'"'+(es.length?' title="'+esc(tt)+'" aria-label="'+esc(d+' de '+MES[m]+': '+tt)+'" data-act="toast" data-msg="'+esc(d+' de '+MES[m]+': '+tt)+'" role="button" tabindex="0"':'')+'><span class="dn">'+d+'</span>'+(qa.length?'<span class="cq">'+qa[0]+(qa.length>1?'<sup>+'+(qa.length-1)+'</sup>':'')+'</span>':(dots?'<span class="dots">'+dots+'</span>':''))+'</div>';
     }
     $('cal').innerHTML=out;
-    var up=baseEv().concat(cycEv(y,m),cycEv(m===11?y+1:y,(m+1)%12)).filter(function(e){return e.date>=TODAY}).sort(function(a,b){return a.date.localeCompare(b.date)}).slice(0,8);
+    var up=baseEv().concat(cycEv(y,m),cycEv(m===11?y+1:y,(m+1)%12)).filter(function(e){return e.date>=TODAY&&(!e.cyc||e.svc)}).sort(function(a,b){return a.date.localeCompare(b.date)}).slice(0,40);
     $('evempty').hidden=up.length>0;
-    $('evs').innerHTML=up.map(function(e){var p=e.date.split('-');return '<div class="st"><div><b>'+esc(e.title)+'</b><small>'+(e.cyc?'Se repite todos los meses':(e.ocr?'Detectado automáticamente al subir tu factura':p[0]))+'</small></div><span class="pill '+kk(e.kind)+'">'+p[2]+'/'+p[1]+'</span></div>'}).join('');
-    var seen={},rows=src().filter(function(t){return meta(t.current_step).i>=0}).filter(function(t){var k=t.provider_name+cycDay(t);if(seen[k])return false;seen[k]=1;return true});
-    $('cycl').innerHTML=rows.map(function(t){return '<div class="st"><div><b>'+esc(t.provider_name)+'</b><small>Factura cada mes</small></div><span class="pill cyc">Día '+cycDay(t)+'</span></div>'}).join('');
+    prevList('evs',up.map(function(e){var p=e.date.split('-');return{g:MES[+p[1]-1]+' '+p[0],h:'<div class="st"><div><b>'+esc(e.title)+'</b><small>'+(e.cyc?'Se repite todos los meses':(e.ocr?'Detectado automáticamente al subir tu factura':p[0]))+'</small></div><span class="pill '+kk(e.kind)+'">'+p[2]+'/'+p[1]+'</span></div>'}}),'Todos los próximos eventos',true);
+    prevList('cycl',CYC.map(function(c){
+      var seen={},ls=[];
+      liveT().filter(function(t){return cycDay(t)===c}).forEach(function(t){var k=t.provider_name||'Servicio';if(seen[k])return;seen[k]=1;var q=promoAt(t,now.getFullYear(),now.getMonth());ls.push(esc(k)+(q?' · promo '+q+' de '+promoTot(t):''))});
+      return{h:'<div class="st"><div><b>Ciclo del día '+c+'</b><small>'+(ls.length?ls.join('<br>'):'Sin servicios en este ciclo')+'</small></div><span class="pill cyc">Día '+c+'</span></div>'};
+    }),'Ciclos de facturación',false);
   }
   $('c-prev').onclick=function(){calCur=new Date(calCur.getFullYear(),calCur.getMonth()-1,1);drawC()};
   $('c-next').onclick=function(){calCur=new Date(calCur.getFullYear(),calCur.getMonth()+1,1);drawC()};
@@ -3585,7 +3753,7 @@ return{svg:function(text){var q=new Q(-1,L.M);q.addData(text);q.make();var n=q.g
     }catch(x){toast('Error de conexión.')}
     b.disabled=false;
   });
-  async function logout(){remSet(false);try{await fetch('/api/auth/logout',{method:'POST',credentials:'include'})}catch(e){}userName='';loaded=false;location.hash='top'}
+  async function logout(){remSet(false);PROF={};try{localStorage.removeItem('mg-prof');sessionStorage.removeItem('mg-prof')}catch(e){}try{await fetch('/api/auth/logout',{method:'POST',credentials:'include'})}catch(e){}userName='';loaded=false;location.hash='top'}
   /* carga de datos (con datos de ejemplo si no hay servidor) */
   function renderAll(){hero();ult();savings();stats();drawG();drawC();drawL();drawF();drawPlan();tfStatus();paint()}
   async function loadAll(){
@@ -3596,11 +3764,54 @@ return{svg:function(text){var q=new Q(-1,L.M);q.addData(text);q.make();var n=q.g
     EV=EV.map(function(e){return{date:e.date||e[0],title:e.title||e[1]||'Evento',kind:e.kind||e[2]}});
     renderAll();
   }
-  function setUser(){var rm3=remGet();if(rm3&&userName&&rm3.n!==userName)remSet(true,rm3.e);$('p-name').textContent=userName||'Tu cuenta';$('pf-name').textContent=userName||'Tu cuenta';if(!photoUrl){$('p-av').textContent=(userName||'M').charAt(0).toUpperCase();$('pav').textContent=(userName||'M').charAt(0).toUpperCase()}$('p-hello').textContent='Hola'+(userName?', '+userName.split(' ')[0]:'')}
+  /* datos del perfil: salen del registro (esta sesión) y de /api/auth/me si el servidor los devuelve */
+  var PROF={};
+  try{PROF=JSON.parse(localStorage.getItem('mg-prof')||sessionStorage.getItem('mg-prof')||'{}')||{}}catch(e){PROF={}}
+  function fDoc(t,v){v=String(v||'').replace(/\D/g,'');if(!v)return '';
+    if(v.length===11)return v.slice(0,2)+'-'+v.slice(2,10)+'-'+v.slice(10);
+    return v.replace(/\B(?=(\d{3})+(?!\d))/g,'.')}
+  function fBirth(v){var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(String(v||''));return m?m[3]+'/'+m[2]+'/'+m[1]:(v||'')}
+  function setV(id,v,ph){var e=$(id);e.textContent=v||ph;e.classList.toggle('empty',!v)}
+  function drawProf(){
+    var t=PROF.dtype||'';
+    $('pf-doc-l').textContent=t||'DNI / CUIL / CUIT';
+    setV('pf-name',(userName||PROF.name||'').trim(),'Sin completar');
+    setV('pf-doc',fDoc(t,PROF.doc),'Sin completar');
+    setV('pf-birth',PROF.birth?fBirth(PROF.birth):'','Sin completar');
+    setV('pf-phone',PROF.phone,'Sin completar');
+  }
+  var PDOC={DNI:[7,8],CUIL:[11,11],CUIT:[11,11]};
+  function openProf(){
+    var n=(userName||PROF.name||'').trim().split(/\s+/);
+    $('pe-name').value=n[0]||'';$('pe-last').value=n.slice(1).join(' ');
+    $('pe-dt').value=PROF.dtype||'DNI';$('pe-doc').value=PROF.doc||'';$('pe-birth').value=PROF.birth||'';$('pe-phone').value=PROF.phone||'';
+    $('pe-err').textContent='';openM('m-prof');
+  }
+  function saveProf(){
+    var er=$('pe-err'),nm=$('pe-name').value.trim(),ls=$('pe-last').value.trim(),dt=$('pe-dt').value,dc=$('pe-doc').value.replace(/\D/g,''),bv=$('pe-birth').value,ph=$('pe-phone').value.trim();
+    function bad(m,id){er.textContent=m;$(id).focus()}
+    if(nm.length<2)return bad('Escribí tu nombre.','pe-name');
+    if(ls.length<2)return bad('Escribí tu apellido.','pe-last');
+    var r=PDOC[dt];if(dc.length<r[0]||dc.length>r[1])return bad('El '+dt+' debe tener '+(r[0]===r[1]?r[0]:'7 u 8')+' números.','pe-doc');
+    var bd=bv?new Date(bv+'T00:00:00'):null,now=new Date();
+    if(!bd||isNaN(bd)||bd>now||bd.getFullYear()<1900)return bad('Elegí tu fecha de nacimiento.','pe-birth');
+    if(ph.replace(/\D/g,'').length<8)return bad('Escribí un teléfono con código de área.','pe-phone');
+    userName=nm+' '+ls;PROF={name:userName,dtype:dt,doc:dc,birth:bv,phone:ph};
+    try{localStorage.setItem('mg-prof',JSON.stringify(PROF))}catch(e){}
+    setUser();closeM('m-prof');toast('Datos del perfil guardados.');
+  }
+  function mergeProf(d){
+    var doc=d.dni||d.cuil||d.cuit||d.document_number||d.document||d.doc;
+    if(doc){PROF.doc=doc;PROF.dtype=d.document_type||d.doc_type||(d.dni?'DNI':d.cuil?'CUIL':d.cuit?'CUIT':(String(doc).replace(/\D/g,'').length===11?'CUIT':'DNI'))}
+    var b=d.birth_date||d.birthdate||d.date_of_birth||d.fecha_nacimiento;if(b)PROF.birth=b;
+    var p=d.phone||d.telefono||d.whatsapp||d.mobile;if(p)PROF.phone=p;
+    var n=d.first_name&&d.last_name?d.first_name+' '+d.last_name:d.name;if(n)PROF.name=n;
+  }
+  function setUser(){if(!userName&&PROF.name)userName=PROF.name;var rm3=remGet();if(rm3&&userName&&rm3.n!==userName)remSet(true,rm3.e);$('p-name').textContent=userName||'Tu cuenta';drawProf();if(!photoUrl){$('p-av').textContent=(userName||'M').charAt(0).toUpperCase();$('pav').textContent=(userName||'M').charAt(0).toUpperCase()}$('p-hello').textContent='Hola'+(userName?', '+userName.split(' ')[0]:'')}
   async function auth(){
     try{var r=await fetch('/api/auth/me',{credentials:'include'});
       if(r.ok){var d=await r.json();
-        if(d&&(d.id||d.email)){if(!userName)userName=d.name||(d.email||'').split('@')[0];setUser();
+        if(d&&(d.id||d.email)){if(!userName)userName=d.name||(d.email||'').split('@')[0];mergeProf(d);setUser();
           if(!beat){beat=true;setInterval(function(){fetch('/api/presence/heartbeat',{method:'POST',credentials:'include'}).catch(function(){})},60000)}}}}catch(e){}
     await loadAll();
   }
@@ -3719,7 +3930,7 @@ return{svg:function(text){var q=new Q(-1,L.M);q.addData(text);q.make();var n=q.g
       case'hist':openHist(id);break;case'neg':neg(id);break;case'cancel':cancel(id);break;
       case'upload':$('file').click();break;case'goup':tab('facturas');$('file').click();break;
       case'pwd':openM('m-pwd');break;case'logout':logout();break;case'toast':toast(a.dataset.msg);break;
-      case'close':closeM(a.dataset.m);break;
+      case'close':closeM(a.dataset.m);break;case'calall':openAll(a.dataset.k);break;case'editprof':openProf();break;case'saveprof':saveProf();break;
       case'2fa':tfShow(TFA.m?'tf-on':'tf-pick');openM('m-2fa');break;
       case'tf-app':tfApp();break;
       case'tf-mail':$('tf-email').value='';$('tf-mrow').hidden=true;$('tf-merr').textContent='';tfShow('tf-mailp');break;
@@ -3889,7 +4100,7 @@ return{svg:function(text){var q=new Q(-1,L.M);q.addData(text);q.make();var n=q.g
     items.forEach(function(b,k){b.setAttribute('aria-selected',k===i?'true':'false')});
   }
   function open(o,focus){
-    menu.classList.toggle('open',o);btn.setAttribute('aria-expanded',o?'true':'false');
+    menu.classList.toggle('open',o);if(typeof wrap!=='undefined'&&wrap&&wrap.classList)wrap.classList.toggle('on',o);btn.setAttribute('aria-expanded',o?'true':'false');
     if(o&&focus!==false){var t=items[sel.selectedIndex];if(t)t.focus({preventScroll:true});t&&t.scrollIntoView({block:'nearest'})}
   }
   function pick(i){
@@ -4019,7 +4230,7 @@ return{svg:function(text){var q=new Q(-1,L.M);q.addData(text);q.make();var n=q.g
     function paint(){var i=sel.selectedIndex;btn.innerHTML='<span class="cur">'+dot(opts[i])+'<span>'+opts[i].text+'</span></span>'+CH;items.forEach(function(b,k){b.setAttribute('aria-selected',k===i?'true':'false')})}
     function open(o,focus){
       if(o)all.forEach(function(f){f(false)});
-      menu.classList.toggle('open',o);btn.setAttribute('aria-expanded',o?'true':'false');
+      menu.classList.toggle('open',o);if(typeof wrap!=='undefined'&&wrap&&wrap.classList)wrap.classList.toggle('on',o);btn.setAttribute('aria-expanded',o?'true':'false');
       if(o&&focus!==false){var t=items[sel.selectedIndex];if(t){t.focus({preventScroll:true});t.scrollIntoView({block:'nearest'})}}
     }
     all.push(function(o){open(o,false)});
